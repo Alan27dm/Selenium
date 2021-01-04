@@ -6,15 +6,19 @@ import unittest
 
 class Baidu(unittest.TestCase):
     def setUp(self):
-        self.Baidu=webdriver.Chrome()
-        self.Baidu.get("http://www.baidu.com")
+        self.baidu = webdriver.Chrome()
+        self.baidu.get("http://www.baidu.com")
+
     def test_Baidu(self):
         '''Baidu搜索验证'''
-        self.Baidu.find_element_by_id("kw").send_keys("selenium")
-        self.Baidu.find_element_by_id("su").submit()
+        self.baidu.find_element_by_id("kw").send_keys("selenium")
+        self.baidu.find_element_by_id("su").submit()
         sleep(2)
+
     def tearDown(self):
         # quit.quit(self.Baidu)
-        Baidu.quit()
-if __name__=="__main__":
+        self.baidu.quit()
+
+
+if __name__ == "__main__":
     unittest.main()

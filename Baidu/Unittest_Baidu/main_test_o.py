@@ -1,23 +1,23 @@
 import unittest
 import HTMLTestRunner
 # from test_case import Baidu,Tencent,wangyi
-from test_case import * #*在该处不是代表导入所有测试用例类的文件,而是导入了一个文件__init__
+from test_case import *  # *在该处不是代表导入所有测试用例类的文件,而是导入了一个文件__init__
 import time
 import all_class_name
-#通过一个all-tests文件运行多个.py文件---简单的用例批量执行
-#只能运行和调用以test开头的函数用例
-suite=unittest.TestSuite()
-class_list=all_class_name.all_class_name()
+# 通过一个all-tests文件运行多个.py文件---简单的用例批量执行
+# 只能运行和调用以test开头的函数用例
+suite = unittest.TestSuite()
+class_list = all_class_name.all_class_name()
 for class_name in class_list:
     suite.addTest(unittest.makeSuite(class_name))
 
 # suite.addTest(unittest.makeSuite(Baidu.Baidu)) #在一个叫做suite的容器中增加了一个类的
 # suite.addTest(unittest.makeSuite(Tencent.Tencent))
 # suite.addTest(unittest.makeSuite(wangyi.wangyi))
-now_time=time.strftime("%Y-%m-%d %H.%M.%S") #写入小时和分钟的时候,不能使用冒号.可以使用.点代替
-wz="D:\\Unittest_Baidu\\report\\"+now_time+" result.html"#因为地址信息是字符串,所以可以将文件名和地址以及时间用加号相连
-fp=open(wz,"wb")
-HTMLTestRunner.HTMLTestRunner(stream=fp,title="Baidu的测试结果",description="Baidu的查询验证").run(suite)
+now_time = time.strftime("%Y-%m-%d %H.%M.%S")  # 写入小时和分钟的时候,不能使用冒号.可以使用.点代替
+wz = "D:\\Unittest_Baidu\\report\\"+now_time+" result.html"  # 因为地址信息是字符串,所以可以将文件名和地址以及时间用加号相连
+fp = open(wz, "wb")
+HTMLTestRunner.HTMLTestRunner(stream=fp, title="Baidu的测试结果", description="Baidu的查询验证").run(suite)
 # # print(time.ctime()) #current当前
 # # print(time.localtime()) #打印当地时间
 
