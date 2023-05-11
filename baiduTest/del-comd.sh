@@ -1,0 +1,1 @@
+find . -iname "__pycache__" -exec rm -rf {} \;
