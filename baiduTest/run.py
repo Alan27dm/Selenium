@@ -11,16 +11,25 @@ from pathlib import Path
 from test_case import *
 import sys
 
-sys.path.extend(['./', '../'])
+if not sys.argv[1:]:
+    suite = unittest.TestSuite()
+    for module in modules:
+        clsName = eval(f'{module}.{module.capitalize()}')
+        suite.addTest(unittest.makeSuite(clsName))
 
-suite = unittest.TestSuite()
-for module in modules:
-    clsName = eval(f'{module}.{module.capitalize()}')
-    suite.addTest(unittest.makeSuite(clsName))
+    now_time = time.strftime("%Y-%m-%d %H.%M.%S")
+    wz = Path(__file__).parent.absolute() / 'reports' / f"{now_time}_result.html"
+    print('Report:', wz)
+    with open(wz, "wb") as fp:
+        HTMLTestRunner(stream=fp, title="Baidu Search的测试结果", description="Baidu的查询验证").run(suite)
+        # unittest.TestProgram(testRunner=HTMLTestRunner()) # 官方的报告
+else:
+    print('sys.argv:', sys.argv[1:])
+    module = sys.argv[1:][0]
+    if module not in modules:
+        print('Module not found:', module)
+        exit(0)
 
-now_time = time.strftime("%Y-%m-%d %H.%M.%S")
-wz = Path(__file__).parent.absolute() / 'reports' / f"{now_time}_result.html"
-print('Report:', wz)
-with open(wz, "wb") as fp:
-    HTMLTestRunner(stream=fp, title="Baidu Search的测试结果", description="Baidu的查询验证").run(suite)
-    # unittest.TestProgram(testRunner=HTMLTestRunner()) # 官方的报告
+    m = f'{module}.{module.capitalize()}'
+    print('Selected module:', eval(m))
+    unittest.main(defaultTest=m, verbosity=2)
